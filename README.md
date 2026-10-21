@@ -69,4 +69,4 @@ This is a conceptual explanation rather than an exact reproduction of private pr
 
 This repository does **not** contain the original automation export, executable scripts, credentials, live API URLs, webhook paths, customer data, business-specific criteria, or employer-identifying information. All example records and payloads are fictional. The JSON is **not runnable and cannot be imported as a functioning n8n workflow**.
 
-**Publication note:** Even anonymized workflow architecture may be protected by confidentiality or intellectual-property obligations. Keep the repository private until you have verified permission to publish the materials, including screenshots and the connection topology.
+
