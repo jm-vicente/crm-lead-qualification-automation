@@ -59,13 +59,11 @@ This is a conceptual explanation rather than an exact reproduction of private pr
 | `workflow-architecture.json` | Detailed, non-runnable technical architecture: generalized nodes, connections, logic outlines, and illustrative payloads |
 | `assets/` | Space for a separately reviewed, permitted workflow screenshot |
 
-## Workflow screenshot
+## Workflow Screenshot
 
-*Add `assets/workflow-overview.png` only after checking that the screenshot is approved for sharing and contains no internal data or company-specific details.*
+![CRM Lead Qualification Workflow](assets/workflow-overview.png)
 
-<!-- Once the approved screenshot exists, uncomment the next line:
-![Generalized workflow overview](assets/workflow-overview.png)
--->
+*Generalized workflow architecture showing event processing, CRM integrations, conditional routing, tracking, and automated notifications.*
 
 ## Confidentiality and limitations
 
