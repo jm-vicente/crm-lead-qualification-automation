@@ -44,9 +44,7 @@ See [`workflow-architecture.json`](workflow-architecture.json) for a **detailed,
 
 ## Workflow Screenshot
 
-When available, add a generalized or sanitized screenshot at `assets/workflow-overview.png`, then display it here:
-
-<!-- ![CRM Lead Qualification Workflow](assets/workflow-overview.png) -->
+![CRM Lead Qualification Workflow](assets/workflow-overview.png)
 
 ## My Role & Contributions
 
