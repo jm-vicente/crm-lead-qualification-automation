@@ -1,0 +1,2021 @@
+{
+  "schema": "portfolio.architecture.v1",
+  "title": "CRM Lead Qualification & Workflow Automation",
+  "artifact_type": "sanitized technical architecture reference",
+  "executable": false,
+  "source_note": "Generalized representation of a managed collaborative CRM workflow; examples are synthetic and configuration is intentionally absent.",
+  "architecture_summary": {
+    "pattern": "Event-driven CRM workflow with conditional routing, record enrichment, messaging, tracking, and failure handling",
+    "workflow_stages": [
+      "Inbound CRM event reception",
+      "Event parsing, filtering and general classification",
+      "CRM record lookup and field normalization",
+      "Source/event-based routing",
+      "Tracking record updates and team notifications",
+      "State handling and error routing"
+    ],
+    "technology_categories": [
+      "n8n",
+      "CRM connector",
+      "Messaging connector",
+      "Spreadsheet tracking",
+      "HTTP APIs",
+      "JavaScript transformations"
+    ]
+  },
+  "synthetic_example_event": {
+    "event_id": "demo-event-001",
+    "record_ref": "demo-record-001",
+    "event_type": "lead.updated",
+    "source_category": "form",
+    "attributes": {
+      "status": "ready_for_review",
+      "qualification_band": "high"
+    }
+  },
+  "synthetic_example_result": {
+    "record_ref": "demo-record-001",
+    "route": "review_queue",
+    "notification": "queued",
+    "tracking": "updated"
+  },
+  "nodes": [
+    {
+      "id": "node-001",
+      "name": "Receive event 01",
+      "type": "webhook",
+      "n8n_node_family": "n8n-nodes-base.webhook",
+      "type_version": 2.1,
+      "position": [
+        -144,
+        352
+      ],
+      "purpose": "Accepts a generalized CRM change event for downstream processing.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Inbound event trigger; production rules and scripts intentionally excluded",
+        "output_example": {
+          "event_type": "lead.updated",
+          "record_ref": "demo-record-001",
+          "source_category": "form"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-002",
+      "name": "External API operation 01",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        -144,
+        2000
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-003",
+      "name": "Transform / format data 01",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        80,
+        2000
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-004",
+      "name": "Team notification 01",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        752,
+        2000
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-005",
+      "name": "Transform / format data 02",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        976,
+        2000
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-006",
+      "name": "Handle failure 01",
+      "type": "errorTrigger",
+      "n8n_node_family": "n8n-nodes-base.errorTrigger",
+      "type_version": 1,
+      "position": [
+        -144,
+        1248
+      ],
+      "purpose": "Starts an error handling route after a workflow failure.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Error handling trigger; production rules and scripts intentionally excluded",
+        "output_example": {
+          "error_kind": "integration_error",
+          "event_ref": "demo-event"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-007",
+      "name": "Team notification 02",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        80,
+        1248
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-008",
+      "name": "Architecture annotation 01",
+      "type": "stickyNote",
+      "n8n_node_family": "n8n-nodes-base.stickyNote",
+      "type_version": 1,
+      "position": [
+        -528,
+        -848
+      ],
+      "purpose": "Visual annotation retained as a generic placeholder; original text removed.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Documentation annotation; production rules and scripts intentionally excluded",
+        "output_example": {}
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-009",
+      "name": "Architecture annotation 02",
+      "type": "stickyNote",
+      "n8n_node_family": "n8n-nodes-base.stickyNote",
+      "type_version": 1,
+      "position": [
+        -160,
+        -816
+      ],
+      "purpose": "Visual annotation retained as a generic placeholder; original text removed.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Documentation annotation; production rules and scripts intentionally excluded",
+        "output_example": {}
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-010",
+      "name": "Architecture annotation 03",
+      "type": "stickyNote",
+      "n8n_node_family": "n8n-nodes-base.stickyNote",
+      "type_version": 1,
+      "position": [
+        720,
+        -976
+      ],
+      "purpose": "Visual annotation retained as a generic placeholder; original text removed.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Documentation annotation; production rules and scripts intentionally excluded",
+        "output_example": {}
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-011",
+      "name": "Architecture annotation 04",
+      "type": "stickyNote",
+      "n8n_node_family": "n8n-nodes-base.stickyNote",
+      "type_version": 1,
+      "position": [
+        2096,
+        -1232
+      ],
+      "purpose": "Visual annotation retained as a generic placeholder; original text removed.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Documentation annotation; production rules and scripts intentionally excluded",
+        "output_example": {}
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-012",
+      "name": "Transform / format data 03",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        1424,
+        2000
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-013",
+      "name": "External API operation 02",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        1648,
+        2000
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-014",
+      "name": "Tracking table action 01",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        -144,
+        2224
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-015",
+      "name": "Tracking table action 02",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        -144,
+        2672
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-016",
+      "name": "Check condition 01",
+      "type": "if",
+      "n8n_node_family": "n8n-nodes-base.if",
+      "type_version": 2.3,
+      "position": [
+        304,
+        2000
+      ],
+      "purpose": "Applies a true/false guard to continue or skip an action.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Conditional decision; production rules and scripts intentionally excluded",
+        "output_example": {
+          "condition": "record is eligible",
+          "result": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-017",
+      "name": "Tracking table action 03",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        -144,
+        2448
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-018",
+      "name": "Team notification 03",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        1200,
+        2000
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-019",
+      "name": "Receive event 02",
+      "type": "webhook",
+      "n8n_node_family": "n8n-nodes-base.webhook",
+      "type_version": 2.1,
+      "position": [
+        -144,
+        1472
+      ],
+      "purpose": "Accepts a generalized CRM change event for downstream processing.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Inbound event trigger; production rules and scripts intentionally excluded",
+        "output_example": {
+          "event_type": "lead.updated",
+          "record_ref": "demo-record-001",
+          "source_category": "form"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-020",
+      "name": "CRM record action 01",
+      "type": "hubspot",
+      "n8n_node_family": "n8n-nodes-base.hubspot",
+      "type_version": 2.2,
+      "position": [
+        80,
+        1472
+      ],
+      "purpose": "Looks up or updates generalized CRM records.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "CRM connector operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "lifecycle_stage": "qualified"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-021",
+      "name": "Team notification 04",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        304,
+        1472
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-022",
+      "name": "Team notification 05",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        528,
+        1472
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-023",
+      "name": "Run demo 01",
+      "type": "manualTrigger",
+      "n8n_node_family": "n8n-nodes-base.manualTrigger",
+      "type_version": 1,
+      "position": [
+        -144,
+        1696
+      ],
+      "purpose": "Allows manual test execution with synthetic input.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Manual test trigger; production rules and scripts intentionally excluded",
+        "output_example": {
+          "test_mode": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-024",
+      "name": "External API operation 03",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        80,
+        1696
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-025",
+      "name": "Tracking table action 04",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        528,
+        1920
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-026",
+      "name": "Transform / format data 04",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        80,
+        352
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-027",
+      "name": "Route event 01",
+      "type": "switch",
+      "n8n_node_family": "n8n-nodes-base.switch",
+      "type_version": 3.4,
+      "position": [
+        304,
+        304
+      ],
+      "purpose": "Routes records according to generalized event category or source category.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Multi-branch routing; production rules and scripts intentionally excluded",
+        "output_example": {
+          "routing_key": "source_category",
+          "branches": [
+            "form",
+            "other",
+            "fallback"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-028",
+      "name": "External API operation 04",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        528,
+        64
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-029",
+      "name": "Transform / format data 05",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        752,
+        64
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-030",
+      "name": "Transform / format data 06",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        1424,
+        448
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-031",
+      "name": "External API operation 05",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        1648,
+        448
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-032",
+      "name": "External API operation 06",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        528,
+        448
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-033",
+      "name": "Transform / format data 07",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        752,
+        448
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-034",
+      "name": "Team notification 06",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        976,
+        64
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-035",
+      "name": "Team notification 07",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        976,
+        448
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-036",
+      "name": "Transform / format data 08",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        1424,
+        736
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-037",
+      "name": "External API operation 07",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        1648,
+        736
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-038",
+      "name": "Tracking table action 05",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        1200,
+        640
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-039",
+      "name": "Tracking table action 06",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        1200,
+        256
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-040",
+      "name": "Normalize fields 01",
+      "type": "set",
+      "n8n_node_family": "n8n-nodes-base.set",
+      "type_version": 3.4,
+      "position": [
+        1200,
+        448
+      ],
+      "purpose": "Maps or normalizes record fields prior to the next integration step.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Field mapping; production rules and scripts intentionally excluded",
+        "output_example": {
+          "input_fields": [
+            "record_ref",
+            "source_category"
+          ],
+          "output_fields": [
+            "normalized_record_ref",
+            "route"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-041",
+      "name": "Normalize fields 02",
+      "type": "set",
+      "n8n_node_family": "n8n-nodes-base.set",
+      "type_version": 3.4,
+      "position": [
+        1200,
+        64
+      ],
+      "purpose": "Maps or normalizes record fields prior to the next integration step.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Field mapping; production rules and scripts intentionally excluded",
+        "output_example": {
+          "input_fields": [
+            "record_ref",
+            "source_category"
+          ],
+          "output_fields": [
+            "normalized_record_ref",
+            "route"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-042",
+      "name": "Normalize fields 03",
+      "type": "set",
+      "n8n_node_family": "n8n-nodes-base.set",
+      "type_version": 3.4,
+      "position": [
+        1424,
+        256
+      ],
+      "purpose": "Maps or normalizes record fields prior to the next integration step.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Field mapping; production rules and scripts intentionally excluded",
+        "output_example": {
+          "input_fields": [
+            "record_ref",
+            "source_category"
+          ],
+          "output_fields": [
+            "normalized_record_ref",
+            "route"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-043",
+      "name": "CRM record action 02",
+      "type": "hubspot",
+      "n8n_node_family": "n8n-nodes-base.hubspot",
+      "type_version": 2.2,
+      "position": [
+        1648,
+        256
+      ],
+      "purpose": "Looks up or updates generalized CRM records.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "CRM connector operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "lifecycle_stage": "qualified"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-044",
+      "name": "Route event 02",
+      "type": "switch",
+      "n8n_node_family": "n8n-nodes-base.switch",
+      "type_version": 3.4,
+      "position": [
+        1872,
+        160
+      ],
+      "purpose": "Routes records according to generalized event category or source category.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Multi-branch routing; production rules and scripts intentionally excluded",
+        "output_example": {
+          "routing_key": "source_category",
+          "branches": [
+            "form",
+            "other",
+            "fallback"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-045",
+      "name": "Transform / format data 09",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        2096,
+        256
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-046",
+      "name": "Team notification 08",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        2320,
+        256
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-047",
+      "name": "Transform / format data 10",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        2096,
+        64
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-048",
+      "name": "Team notification 09",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        2320,
+        64
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-049",
+      "name": "External API operation 08",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        528,
+        1024
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-050",
+      "name": "Tracking table action 07",
+      "type": "googleSheets",
+      "n8n_node_family": "n8n-nodes-base.googleSheets",
+      "type_version": 4.7,
+      "position": [
+        1200,
+        1024
+      ],
+      "purpose": "Reads or writes tracking records through a spreadsheet data connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Tabular record operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "status": "processed",
+          "logged_at": "2026-01-01T00:00:00Z"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-051",
+      "name": "Normalize fields 04",
+      "type": "set",
+      "n8n_node_family": "n8n-nodes-base.set",
+      "type_version": 3.4,
+      "position": [
+        1200,
+        832
+      ],
+      "purpose": "Maps or normalizes record fields prior to the next integration step.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Field mapping; production rules and scripts intentionally excluded",
+        "output_example": {
+          "input_fields": [
+            "record_ref",
+            "source_category"
+          ],
+          "output_fields": [
+            "normalized_record_ref",
+            "route"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-052",
+      "name": "Transform / format data 11",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        1424,
+        1024
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-053",
+      "name": "External API operation 09",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        1648,
+        1024
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-054",
+      "name": "Transform / format data 12",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        752,
+        1024
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-055",
+      "name": "Team notification 10",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        976,
+        1024
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-056",
+      "name": "Transform / format data 13",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        1920,
+        432
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-057",
+      "name": "Team notification 11",
+      "type": "slack",
+      "n8n_node_family": "n8n-nodes-base.slack",
+      "type_version": 2.4,
+      "position": [
+        2112,
+        432
+      ],
+      "purpose": "Finds, sends, or threads team notifications via a messaging connector.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Messaging operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "channel": "demo-channel",
+          "text": "Demo lead status update",
+          "thread_ref": "demo-thread"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-058",
+      "name": "Transform / format data 14",
+      "type": "code",
+      "n8n_node_family": "n8n-nodes-base.code",
+      "type_version": 2,
+      "position": [
+        1808,
+        1328
+      ],
+      "purpose": "Transforms, validates, or formats incoming records using a scripted processing step. Original scripts omitted.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Data transformation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "classification": "qualified",
+          "notification_ready": true
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-059",
+      "name": "Route event 03",
+      "type": "switch",
+      "n8n_node_family": "n8n-nodes-base.switch",
+      "type_version": 3.4,
+      "position": [
+        2016,
+        1280
+      ],
+      "purpose": "Routes records according to generalized event category or source category.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Multi-branch routing; production rules and scripts intentionally excluded",
+        "output_example": {
+          "routing_key": "source_category",
+          "branches": [
+            "form",
+            "other",
+            "fallback"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-060",
+      "name": "Architecture annotation 05",
+      "type": "stickyNote",
+      "n8n_node_family": "n8n-nodes-base.stickyNote",
+      "type_version": 1,
+      "position": [
+        1104,
+        1232
+      ],
+      "purpose": "Visual annotation retained as a generic placeholder; original text removed.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Documentation annotation; production rules and scripts intentionally excluded",
+        "output_example": {}
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-061",
+      "name": "CRM record action 03",
+      "type": "hubspot",
+      "n8n_node_family": "n8n-nodes-base.hubspot",
+      "type_version": 2.2,
+      "position": [
+        1568,
+        1328
+      ],
+      "purpose": "Looks up or updates generalized CRM records.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "CRM connector operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "lifecycle_stage": "qualified"
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-062",
+      "name": "Normalize fields 05",
+      "type": "set",
+      "n8n_node_family": "n8n-nodes-base.set",
+      "type_version": 3.4,
+      "position": [
+        1184,
+        1328
+      ],
+      "purpose": "Maps or normalizes record fields prior to the next integration step.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Field mapping; production rules and scripts intentionally excluded",
+        "output_example": {
+          "input_fields": [
+            "record_ref",
+            "source_category"
+          ],
+          "output_fields": [
+            "normalized_record_ref",
+            "route"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-063",
+      "name": "Normalize fields 06",
+      "type": "set",
+      "n8n_node_family": "n8n-nodes-base.set",
+      "type_version": 3.4,
+      "position": [
+        1360,
+        1328
+      ],
+      "purpose": "Maps or normalizes record fields prior to the next integration step.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Field mapping; production rules and scripts intentionally excluded",
+        "output_example": {
+          "input_fields": [
+            "record_ref",
+            "source_category"
+          ],
+          "output_fields": [
+            "normalized_record_ref",
+            "route"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-064",
+      "name": "External API operation 10",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        2320,
+        1248
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-065",
+      "name": "External API operation 11",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        2320,
+        1376
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-066",
+      "name": "External API operation 12",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        2320,
+        1504
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-067",
+      "name": "External API operation 13",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        2320,
+        1632
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    },
+    {
+      "id": "node-068",
+      "name": "External API operation 14",
+      "type": "httpRequest",
+      "n8n_node_family": "n8n-nodes-base.httpRequest",
+      "type_version": 4.4,
+      "position": [
+        2320,
+        1760
+      ],
+      "purpose": "Retrieves or updates records through an abstract authenticated service interface.",
+      "technical_outline": {
+        "input": "A synthetic event, record, or response from the preceding node",
+        "processing": "Service API operation; production rules and scripts intentionally excluded",
+        "output_example": {
+          "record_ref": "demo-record-001",
+          "fields": [
+            "status",
+            "segment",
+            "source_category"
+          ]
+        }
+      },
+      "runtime_configuration": "omitted; this is not an importable workflow"
+    }
+  ],
+  "connections": [
+    {
+      "from": "node-001",
+      "to": "node-026",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-002",
+      "to": "node-003",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-003",
+      "to": "node-016",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-004",
+      "to": "node-005",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-005",
+      "to": "node-018",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-006",
+      "to": "node-007",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-012",
+      "to": "node-013",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-016",
+      "to": "node-025",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-016",
+      "to": "node-004",
+      "output_branch": 1,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-018",
+      "to": "node-012",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-019",
+      "to": "node-020",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-020",
+      "to": "node-021",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-021",
+      "to": "node-022",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-023",
+      "to": "node-024",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-025",
+      "to": "node-004",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-026",
+      "to": "node-027",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-027",
+      "to": "node-028",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-027",
+      "to": "node-032",
+      "output_branch": 1,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-027",
+      "to": "node-049",
+      "output_branch": 4,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-028",
+      "to": "node-029",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-029",
+      "to": "node-034",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-030",
+      "to": "node-031",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-032",
+      "to": "node-033",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-033",
+      "to": "node-035",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-034",
+      "to": "node-039",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-034",
+      "to": "node-041",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-035",
+      "to": "node-040",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-035",
+      "to": "node-038",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-036",
+      "to": "node-037",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-038",
+      "to": "node-036",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-039",
+      "to": "node-030",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-040",
+      "to": "node-042",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-041",
+      "to": "node-042",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-042",
+      "to": "node-043",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-043",
+      "to": "node-044",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-043",
+      "to": "node-056",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-044",
+      "to": "node-047",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-044",
+      "to": "node-045",
+      "output_branch": 1,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-045",
+      "to": "node-046",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-047",
+      "to": "node-048",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-049",
+      "to": "node-054",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-050",
+      "to": "node-052",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-052",
+      "to": "node-053",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-051",
+      "to": "node-042",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-054",
+      "to": "node-055",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-055",
+      "to": "node-050",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-055",
+      "to": "node-051",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-055",
+      "to": "node-062",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-056",
+      "to": "node-057",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-058",
+      "to": "node-059",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-059",
+      "to": "node-064",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-059",
+      "to": "node-065",
+      "output_branch": 1,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-059",
+      "to": "node-066",
+      "output_branch": 2,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-059",
+      "to": "node-067",
+      "output_branch": 3,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-059",
+      "to": "node-068",
+      "output_branch": 4,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-061",
+      "to": "node-058",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-062",
+      "to": "node-063",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    },
+    {
+      "from": "node-063",
+      "to": "node-061",
+      "output_branch": 0,
+      "input_index": 0,
+      "connection_kind": "main"
+    }
+  ],
+  "privacy_design": {
+    "removed": [
+      "company/employee/customer identifiers",
+      "service-specific private URLs and paths",
+      "credential bindings and IDs",
+      "internal channel IDs",
+      "spreadsheet IDs and tab names",
+      "original scripted source",
+      "production business logic and thresholds",
+      "execution samples and operational payloads"
+    ],
+    "retained": [
+      "generalized n8n node families",
+      "node layout coordinates",
+      "routing topology",
+      "node roles and data flow explanations",
+      "synthetic input/output examples"
+    ]
+  }
+}
